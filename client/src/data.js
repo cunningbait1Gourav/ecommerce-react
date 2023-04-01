@@ -27,16 +27,19 @@ export const categories = [
         id: 1,
         img:"https://res.cloudinary.com/dhxpfw6in/image/upload/v1664520588/mahdi-bafande-npyWFYpHQ94-unsplash_1_pgfeav.jpg",
         title: "SHIRT STYLE",
+        cat:"men"
     },   
     {
         id: 2,
         img:"https://res.cloudinary.com/dhxpfw6in/image/upload/v1664520735/dom-hill-nimElTcTNyY-unsplash_wijd7h.jpg",
         title: "LOUNGEWEAR LOVE",
+        cat:"coat"
     },   
     {
         id: 3,
         img:"https://res.cloudinary.com/dhxpfw6in/image/upload/v1664520818/benjamin-szabo-3azXYMg-Y8o-unsplash_bmml1a.jpg",
         title: "JAZZ JACKETS",
+        cat:"jeans"
     },
 ]
 

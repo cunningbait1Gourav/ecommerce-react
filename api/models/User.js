@@ -20,6 +20,15 @@ const userSchema = new mongoose.Schema(
         isAdmin:{
             type:Boolean,
             default:false,
+        },
+        name:{
+            type:String,
+        },
+        lastName:{
+            type:String,
+        },
+        address:{
+            type:String,
         }
     },{timestamps:true}
 )

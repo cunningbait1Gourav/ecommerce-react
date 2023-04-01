@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container=styled.div`
@@ -23,6 +24,8 @@ const Span = styled.span`
 `
 
 const Success=()=>{
+    const location = useLocation()
+    console.log(location)
     return(
         <Container>
             <Span>Payment was successfull</Span>

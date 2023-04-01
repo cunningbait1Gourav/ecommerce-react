@@ -2,6 +2,7 @@ import { Facebook, Instagram, MailOutline, Phone, Room, Twitter, WhatsApp } from
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
     display: flex;
@@ -96,11 +97,11 @@ const Footer =()=>{
             <Center>
                 <Title>Useful Links</Title>
                 <List>
-                    <ListItem>Home</ListItem>
-                    <ListItem>Cart</ListItem>
-                    <ListItem>Books</ListItem>
-                    <ListItem>Stationary</ListItem>
-                    <ListItem>PYQs</ListItem>
+                <ListItem> <Link to="/">Home</Link></ListItem>
+                <ListItem> <Link to="/cart">Cart</Link></ListItem>
+                <ListItem> <Link to="/products/Books">Books</Link></ListItem>
+                <ListItem> <Link to="/products/Stationary">Stationary</Link></ListItem>
+                <ListItem> <Link to="/products/PYQs">PYQs</Link></ListItem>
                     <ListItem>OrderTracking</ListItem>
                     <ListItem>My Account</ListItem>
                     <ListItem>Wishlist</ListItem>

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { register } from '../redux/apiCalls';
 import { mobile } from '../responsive';
 
 const Container = styled.div`
@@ -56,7 +58,23 @@ const Button = styled.button`
 
 `
 
+
 const Register = ()=>{
+    const [user,setUser]= useState({});
+    const dispatch = useDispatch();
+
+    const handleChange=(e)=>{
+        setUser(prev=>{
+            return{...prev,[e.target.name]:e.target.value}
+        })
+    }
+
+    const handleClick=(e)=>{
+        e.preventDefault();
+        console.log(user);
+        register(user,dispatch)
+    }
+
     return(
         <Container>
             <Wrapper>
@@ -64,16 +82,17 @@ const Register = ()=>{
                     CREATE AN ACCOUNT
                 </Title>
                 <Form>
-                    <Input placeholder="Name"></Input>
-                    <Input placeholder="Last Name"></Input>
-                    <Input placeholder="email"></Input>
-                    <Input placeholder="username"></Input>
-                    <Input placeholder="Password"></Input>
+                    <Input placeholder="Name" name='name' onChange={handleChange}></Input>
+                    <Input placeholder="Last Name" name='lastName' onChange={handleChange}></Input>
+                    <Input placeholder="email" name='email' onChange={handleChange}></Input>
+                    <Input placeholder="username" name='username' onChange={handleChange}></Input>
+                    <Input placeholder="address" name='address' onChange={handleChange}></Input>
+                    <Input placeholder="Password" name='password' type="password" onChange={handleChange}></Input>
                     <Input placeholder="Confirm Password"></Input>
                     <Agreement>
                         By creating an account, I consent to the processing of my personal data in accordance with the <b>Privacy Policy</b>
                     </Agreement>
-                    <Button>CREATE</Button>
+                    <Button onClick={handleClick}>CREATE</Button>
                 </Form>
             </Wrapper>
 

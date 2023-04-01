@@ -1,11 +1,16 @@
 import { Add, Remove } from '@material-ui/icons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Newsletter from '../components/Newsletter';
 import { mobile } from '../responsive';
+import { useLocation } from 'react-router-dom';
+import { publicRequest } from '../requestMethods';
+import { addProduct } from '../redux/cartRedux';
+import { useDispatch } from 'react-redux';
+
 
 const Container=styled.div`
     
@@ -100,34 +105,71 @@ font-weight: 500;
 
 
 const Product=()=>{
+    const location = useLocation();
+    const id = location.pathname.split("/")[2]
+
+    const [product,setProduct]=useState({})
+    const [quantity,setQuantity]=useState(1) 
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+            const getProduct = async ()=>{
+                try{
+                    console.log(id)
+                    const res = await publicRequest(`/products/find/${id}`)
+                    setProduct(res.data);
+                }
+                catch(e){
+                        console.log(e)
+                }
+            }
+            getProduct()
+    },[id])
+
+    const handleQuantity=(type)=>{
+            if(type==="dec"){
+                quantity>1 && setQuantity(quantity-1)
+            }
+            else{
+                setQuantity(quantity+1)
+            }
+    }
+    const handleClick=()=>{
+        console.log("here")
+        product.quantity = product.quantity+ quantity
+        dispatch(addProduct({...product,quantity}));
+    }
+
     return(
         <Container>
             <Navbar/>
             <Announcement/>
             <Wrapper>
-                <ImgContainer><Image src="https://res.cloudinary.com/dhxpfw6in/image/upload/v1664525622/anomaly-WWesmHEgXDs-unsplash-removebg-preview_lhdd6l.png"></Image></ImgContainer>
+                <ImgContainer><Image src={product.img}></Image></ImgContainer>
                 <InfoContainer>
-                    <Title>Denim Jumpsuit</Title>
-                    <Desc>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi rerum quisquam obcaecati, odio eligendi cumque iste autem impedit illo non pariatur qui quo doloremque maiores recusandae repellat laborum corrupti culpa!</Desc>
-                    <Price>$ 20</Price>
+                    <Title>{product.title}</Title>
+                    <Desc>{product.desc}</Desc>
+                    <Price>$ {product.price}</Price>
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>
                                 Color
                             </FilterTitle>
-                            <FilterColor color="black"/>
-                            <FilterColor color="teal"/>
-                            <FilterColor color="darkblue"/>
-                            <FilterColor color="grey"/>
+                            {
+                                <FilterColor color={ product.color } key={ product.color}/>
+                                // colors.map((c)=>{
+                                //     <FilterColor color={c} key={c}/>
+                                // })
+                            }
                         </Filter>
                     </FilterContainer>
                     <AddContainer>
                         <AmountContainer>
-                            <Remove/>
-                                <Amount>1</Amount>
-                            <Add/>
+                            <Remove onClick={()=>handleQuantity("dec")} />
+                                <Amount>{quantity}</Amount>
+                            <Add onClick={()=>handleQuantity("inc")}/>
                         </AmountContainer>
-                        <Button>ADD to Cart</Button>
+                        <Button onClick={ ()=>handleClick() }>ADD to Cart</Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>

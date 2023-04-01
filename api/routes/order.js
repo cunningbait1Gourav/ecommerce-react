@@ -3,10 +3,12 @@ const { verifyToken, verifyTokenAuthorization, verifyTokenAndAdmin } = require("
 const router = require("express").Router();
 
 //Create 
-router.post("/",verifyToken,async(req,res)=>{
+router.post("/",async(req,res)=>{
     const newOrder=new Order(req.body);
+    // console.log(newOrder)
     try{
         const savedOrder = await newOrder.save()
+        // console.log(savedOrder)
         res.status(200).json(savedOrder)
     }
     catch(e){ 
@@ -65,12 +67,17 @@ router.get("/",verifyTokenAndAdmin,async(req,res)=>{
 // Get Monthly Income
 
 router.get("/income",verifyTokenAndAdmin,async(req,res)=>{
+    const productId = req.query.pid;
     const date = new Date();
     const lastMonth = new Date(date.setMonth(date.getMonth()-1))
     const previousMonth = new Date(date.setMonth(lastMonth.getMonth()-1)) 
     try{
         const income = await Order.aggregate([
-            { $match:{ createdAt:{ $gte:previousMonth }} },
+            { $match:{ createdAt:{ $gte:previousMonth },
+            ...Order(productId && {
+                $elementMatch:{productId}
+            })
+        } },
             {
                     $project:{
                     month:{$month:"$createdAt"},

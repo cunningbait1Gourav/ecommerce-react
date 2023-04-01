@@ -1,6 +1,7 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons'
 import React from 'react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { sliderItem } from '../data'
 import {mobile} from "../responsive"
@@ -78,7 +79,7 @@ const Slider = () => {
             setSlideIndex(slideIndex>0? slideIndex-1:2)
         }
         else{
-            setSlideIndex(slideIndex<2? slideIndex+1 :1)
+            setSlideIndex(slideIndex<2? slideIndex+1 :0)
         }
     }
   return (
@@ -100,9 +101,11 @@ const Slider = () => {
                         <Desc>
                            {item.desc}
                         </Desc>
+                        <Link to="/products" style={{color:"#000", textDecoration:"none"}} >
                         <Button>
                             Shop Now
                         </Button>
+                        </Link>
                     </InfoContainer>
                 </Slide>
                 ))

@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import {Search,ShoppingCartOutlined} from '@material-ui/icons';
 import {Badge} from '@material-ui/core'
 import { mobile } from '../responsive';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Logout } from '../redux/userRedux';
 
 const Container = styled.div`
 height: 60px;
@@ -62,23 +65,54 @@ ${mobile({fontSize:"12px", marginLeft:"10px"})}
 `
 
 const Navbar = () => {
-  return (
+  // const [search,setSearch]= useEffect("stationary")
+  const user = useSelector(state=>state.user.currentUser)
+  const quantity = useSelector(state=>state.cart.quantity)
+  const [inputValue,setInputValue]=useState()
+  const handleChange=(e)=>{
+    e.preventDefault()
+    console.log(inputValue)
+    var search = e.target.value.toLowerCase()
+    setInputValue(search)
+  }
+  const dispatch = useDispatch()
+  
+  const handleLogout = ()=>{
+    console.log("Logging out")
+    dispatch(Logout())
+  }
+  console.log(user)
+  
+    return (
     <Container>
         <Wrapper>
             <Left><Language>EN</Language>
             <SearchContainer>
-              <Input placeholder='Search'/>
-              <Search style={{color:"gray", fontSize:16}}/>
+              <Input placeholder='Search Categories' onChange={handleChange}/>
+             <Link to={`/products/${inputValue}`}><Search style={{color:"gray", fontSize:16}}/></Link> 
             </SearchContainer></Left>
             <Center><Logo>STORE.</Logo></Center>
             <Right>
+              {user ?<MenuItem>{user.username}</MenuItem> :<Link to="/register" style={{color:"#246156", textDecoration:"none"}} >
               <MenuItem>Register</MenuItem>
-              <MenuItem>Sign IN</MenuItem>
+            </Link>  }
+            {user ?<MenuItem onClick={handleLogout} style={{color:"#246156"}}>Logout</MenuItem> : <Link to="/login" style={{color:"#246156", textDecoration:"none"}}>
+                <MenuItem>Sign IN</MenuItem>
+              </Link>}
+              {user?<Link to="/cart">
               <MenuItem>
-              <Badge badgeContent={3} color="dark">
+              <Badge badgeContent={quantity}>
                     <ShoppingCartOutlined/>
               </Badge>
               </MenuItem>
+              </Link>:<Link to="/login">
+              <MenuItem>
+                  <Badge badgeContent={quantity}>
+                    <ShoppingCartOutlined/>
+                  </Badge>
+              </MenuItem>  
+              </Link>}
+
             </Right>
         </Wrapper>
     </Container>

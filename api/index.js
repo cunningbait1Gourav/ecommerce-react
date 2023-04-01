@@ -7,6 +7,7 @@ const authRoute = require("./routes/auth")
 const productRoute = require("./routes/product")
 const orderRoute = require("./routes/order")
 const cartRoute = require("./routes/cart")
+const razorPay = require("./routes/razorpay")
 const cors = require("cors")
 dotenv.config()
 const stripeRoute = require("./routes/stripe")
@@ -26,6 +27,7 @@ app.use("/api/products",productRoute)
 app.use("/api/orders",orderRoute)
 app.use("/api/cart",cartRoute)
 app.use("/api/checkout",stripeRoute)
+app.use("/api/payment", razorPay);
 
 
 app.listen(process.env.PORT||5000,()=>{
