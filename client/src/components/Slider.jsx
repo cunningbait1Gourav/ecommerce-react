@@ -1,7 +1,6 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons'
 import React from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { sliderItem } from '../data'
 import {mobile} from "../responsive"
@@ -59,12 +58,6 @@ padding:50px;
 const Title= styled.h1`
 font-size:70px;
 `
-const Button= styled.button`
-padding:10px;
-font-size:20px;
-background-color:transparent;
-cursor:pointer;
-`
 const Desc=styled.p`
 margin: 50px 0px;
 font-size: 20px;
@@ -101,11 +94,6 @@ const Slider = () => {
                         <Desc>
                            {item.desc}
                         </Desc>
-                        <Link to="/products" style={{color:"#000", textDecoration:"none"}} >
-                        <Button>
-                            Shop Now
-                        </Button>
-                        </Link>
                     </InfoContainer>
                 </Slide>
                 ))

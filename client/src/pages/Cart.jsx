@@ -9,6 +9,7 @@ import { mobile } from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useHistory } from "react-router-dom";
 import { publicRequest, userRequest } from "../requestMethods";
+import Pay from "./Pay";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -137,7 +138,7 @@ const Button = styled.button`
 
 const Cart = () => {
 
-    const user = useSelector(state=>state.user.currentUser);
+  const user = useSelector(state=>state.user.currentUser);
   const cart = useSelector((state) => state.cart);
   const [cDetails,setCDetails]=useState({});
 
@@ -279,8 +280,8 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>₹ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <Button onClick={()=>displayRazorpay(cart.total)}>CheckOut</Button>
-            {/* <Button onClick={handleClick}>CheckOut</Button> */}
+            {/* <Button onClick={()=>displayRazorpay(cart.total)}>CheckOut</Button> */}
+            <Pay/>
           </Summary>
         </Bottom>
       </Wrapper>

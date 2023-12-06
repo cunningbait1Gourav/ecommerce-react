@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { register } from '../redux/apiCalls';
 import { mobile } from '../responsive';
@@ -57,6 +57,10 @@ const Button = styled.button`
     cursor:pointer;
 
 `
+const Error = styled.span`
+    color:red;
+`
+
 
 
 const Register = ()=>{
@@ -74,6 +78,8 @@ const Register = ()=>{
         console.log(user);
         register(user,dispatch)
     }
+
+    const {isFetching,error}=useSelector((state)=>state.user)
 
     return(
         <Container>
@@ -93,6 +99,7 @@ const Register = ()=>{
                         By creating an account, I consent to the processing of my personal data in accordance with the <b>Privacy Policy</b>
                     </Agreement>
                     <Button onClick={handleClick}>CREATE</Button>
+                    {error&&<Error>That username or Email is already registered</Error>}
                 </Form>
             </Wrapper>
 

@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL ="http://localhost:5001/api/"
 let object
 
-// console.log(JSON.parse(localStorage.getItem("persist:root")))
+console.log(localStorage.getItem("persist:root"))
 if(JSON.parse(localStorage.getItem("persist:root")))
 {JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser!==null ? object = (JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser).accessToken: object = "" }
 else{
